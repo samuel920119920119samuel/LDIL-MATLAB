@@ -1,7 +1,7 @@
 % get CSI 1x30 from one link
-csi_trace = read_bf_file('base_csi_5.dat');
+csi_trace = read_bf_file('CSIdata/base_csi_5.dat');
 rawTenSNR = zeros(30,30);
-baseIndex = 1900;
+baseIndex = 1200;
 indexCount = 0;
 abc = 0;
 for packetIndex = 1:50
@@ -34,12 +34,12 @@ baseCSI = meanSNR;
 % get CSI 1x30 from one link
 
 % get CSI 1x30 from one link
-csi_trace1 = read_bf_file('env_csi_5.dat');
+csi_trace1 = read_bf_file('CSIdata/env_csi_5.dat');
 
 rawTenSNR1 = zeros(30,30);
-baseIndex1 = 230;
+baseIndex1 = 120;
 indexCount1 = 0;
-for packetIndex1 = 1:6
+for packetIndex1 = 1:50
     csi_entry1 = csi_trace1{baseIndex1+packetIndex1};
     csi1 = get_scaled_csi(csi_entry1);
     csiSize1 = size(csi1);    csiSize1 = csiSize1(1);
@@ -55,7 +55,7 @@ for packetIndex1 = 1:6
     end
 end
 rawTenSNR1((indexCount1+1):30, :) = [];
- plot(rawTenSNR1);
+%plot(rawTenSNR1);
 stdSNR1 = std(rawTenSNR1);
 meanSNR1 = mean(rawTenSNR1);
 %stdSNR1 = 20* log(abs(stdSNR1)./1000);
@@ -63,11 +63,11 @@ meanSNR1 = mean(rawTenSNR1);
 
 envCSI = meanSNR1;
 
-% figure
-% plot(baseCSI, 'LineWidth',3); hold; plot(envCSI, 'LineWidth',3)
-% title('Target stands at LoS', 'FontSize', 20)
-% xlabel('Subcarrier Index', 'FontSize', 20)
-% ylabel('CSI SNR (dB)', 'FontSize', 20)
+ figure
+ plot(baseCSI, 'LineWidth',3); hold; plot(envCSI, 'LineWidth',3)
+ title('Target stands at LoS', 'FontSize', 20)
+ xlabel('Subcarrier Index', 'FontSize', 20)
+ ylabel('CSI SNR (dB)', 'FontSize', 20)
  
 
 % %%%%%%%%%%%%%%%%%%%%
@@ -119,7 +119,7 @@ CSIeff = pre_processing(targetLocation, I, Isize, f0, f, F, O);
  %FitnessFcn = @(x)parameterfun(x,a,b,c);
  rng default % For reproducibility
  opts = optimoptions(@ga,'PlotFcn',{@gaplotbestf,@gaplotstopping});
- opts.InitialPopulationRange = [0 -1;1.5 1];
+ opts.InitialPopulationRange = [0 -1;1.5, 1];
  opts.PopulationSize = 10;
  [x, avg_absError, exitFlag,Output] = ga(PFM, 2, opts)
  % 	FitnessFcn = avg_absError;
