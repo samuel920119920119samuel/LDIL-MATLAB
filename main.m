@@ -3,35 +3,25 @@ csi_trace = read_bf_file('CSIdata/base_csi_5.dat');
 rawTenSNR = zeros(30,30);
 baseIndex = 1200;
 indexCount = 0;
-abc = 0;
 for packetIndex = 1:50
-    %if (csi_trace{baseIndex+packetIndex}.Nrx==1 || csi_trace{baseIndex+packetIndex}.Ntx==1)
-        abc = abc+1;
         csi_entry = csi_trace{baseIndex+packetIndex};
         csi = get_scaled_csi(csi_entry);
         csiSize = size(csi);    csiSize = csiSize(1);
     
-%     SNRcsi = (db(abs(squeeze(csi(NtxNum,:,:)).')))';
-%     rawTenSNR(packetIndex,:) = SNRcsi(1,:);meanSNR
         for NtxNum = 1:csiSize
             indexCount = indexCount+1;
-             SNRcsi = (db(abs(squeeze(csi(NtxNum,:,:)).')))';
-             SNRcsi = 20* log(abs(SNRcsi)./1000);
-            % BSNRcsi = (db(squeeze(csi(NtxNum,:,:).')))';
+            SNRcsi = (db(abs(squeeze(csi(NtxNum,:,:)).')))';
+            SNRcsi = 20* log(abs(SNRcsi)./1000);
             rawTenSNR(indexCount,:) = SNRcsi(1,:);
         end
-    %end
 end
 rawTenSNR((indexCount+1):30, :) = [];
 
 stdSNR = std(rawTenSNR);
 meanSNR = mean(rawTenSNR);
-%stdSNR = 20* log(abs(stdSNR)./1000);
-%meanSNR = 20* log(abs(meanSNR)./1000);
 
 % base CSI 1x30
 baseCSI = meanSNR;
-% get CSI 1x30 from one link
 
 % get CSI 1x30 from one link
 csi_trace1 = read_bf_file('CSIdata/env_csi_5.dat');
@@ -43,31 +33,26 @@ for packetIndex1 = 1:50
     csi_entry1 = csi_trace1{baseIndex1+packetIndex1};
     csi1 = get_scaled_csi(csi_entry1);
     csiSize1 = size(csi1);    csiSize1 = csiSize1(1);
-%     SNRcsi = (db(abs(squeeze(csi(NtxNum,:,:)).')))';
-%     rawTenSNR(packetIndex,:) = SNRcsi(1,:);
     
     for NtxNum1 = 1:csiSize1
         indexCount1 = indexCount1+1;
-         SNRcsi1 = (db(abs(squeeze(csi1(NtxNum1,:,:)).')))';
-         SNRcsi1 = 20* log(abs(SNRcsi1)./1000);
-        % BSNRcsi = (db(squeeze(csi(NtxNum,:,:).')))';
+        SNRcsi1 = (db(abs(squeeze(csi1(NtxNum1,:,:)).')))';
+        SNRcsi1 = 20* log(abs(SNRcsi1)./1000);
         rawTenSNR1(indexCount1,:) = SNRcsi1(1,:);
     end
 end
 rawTenSNR1((indexCount1+1):30, :) = [];
-%plot(rawTenSNR1);
+
 stdSNR1 = std(rawTenSNR1);
 meanSNR1 = mean(rawTenSNR1);
-%stdSNR1 = 20* log(abs(stdSNR1)./1000);
-%meanSNR1 = 20* log(abs(meanSNR1)./1000);
 
 envCSI = meanSNR1;
 
  figure
  plot(baseCSI, 'LineWidth',3); hold; plot(envCSI, 'LineWidth',3)
- title('Target stands at LoS', 'FontSize', 20)
+ title('CSI measurements', 'FontSize', 20)
  xlabel('Subcarrier Index', 'FontSize', 20)
- ylabel('CSI SNR (dB)', 'FontSize', 20)
+ ylabel('CSI SNR (dBm)', 'FontSize', 20)
  
 
 % %%%%%%%%%%%%%%%%%%%%
@@ -115,8 +100,6 @@ CSIeff = pre_processing(targetLocation, I, Isize, f0, f, F, O);
  PFM = @(x)power_fading_model2(Ci, Cj, waveLength, targetLocation, noise, y, linkNum, x, J, At, ht);
  
  %%%%%%%%%%%%%%%%%%%%
- %a = 4; b = 2.1; c = 4; % Assign parameter values
- %FitnessFcn = @(x)parameterfun(x,a,b,c);
  rng default % For reproducibility
  opts = optimoptions(@ga,'PlotFcn',{@gaplotbestf,@gaplotstopping});
  opts.InitialPopulationRange = [0 -1;1.5, 1];
