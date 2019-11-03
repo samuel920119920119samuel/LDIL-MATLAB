@@ -1,11 +1,16 @@
-# LIFS-implementaton
-A MATLAB implementation of [LiFS](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?referer=&httpsredir=1&article=4390&context=sis_research)
+# LDIL-MATLAB
+* A low-cost device-free indoor localization tool implemented in MATLAB, mostly based on [LiFS](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?referer=&httpsredir=1&article=4390&context=sis_research)
+* We aim to take better care of elders at home without expensive and complicated devices
+
 ## Dependencies
 * [linux-80211n-csitool](https://github.com/dhalperi/linux-80211n-csitool/)
+* Hostapd, see our wiki - [Hostapd Installation Guide](https://github.com/samuel920119920119samuel/LDIL-MATLAB/wiki/Hostapd-Installation-Guide)
 * MATLAB toolbox
     * signal processing toolbox
     * global optimization toolbox
     * optimization toolbox
+    * Having problems with MATLAB? See the wiki - [Background Knowledge - MATLAB](https://github.com/samuel920119920119samuel/LDIL-MATLAB/wiki/Background-Knowledge#matlab)
+
 ## Parameters
 In ``main.m``, you need to change parameters according to the following scenarios:
 ### single AP & single MP
@@ -38,9 +43,11 @@ In ``main.m``, you need to change parameters according to the following scenario
 * Multi-AP & multi-MP scenario
     * Some part of code need to be modified to support multi-AP&MP scenario
 
-## What we've done
-* check it out on [HackMD](https://hackmd.io/s/HkBgOfJnG)
+## Our Experiment
+* check it out on our wiki - [Experiment Result](https://github.com/samuel920119920119samuel/LDIL-MATLAB/wiki/Experiment-Result-(single-AP-&-single-MP))
+
+## More Info about [Indoor Localization, CSI & 802.11](https://github.com/samuel920119920119samuel/LDIL-MATLAB/wiki/Background-Knowledge)
 
 ## Contact
-[Jui-An Wang](mailto:samuel9008@g.ncu.edu.tw)
-[Bi-Hong Lai](mailto:youngle@g.ncu.edu.tw)
+* [Jui-An Wang](mailto:samuel9008@g.ncu.edu.tw)
+* [Bi-Hong Lai](mailto:youngle@g.ncu.edu.tw)
